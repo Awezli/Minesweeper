@@ -29,6 +29,7 @@ class Cell(pg.sprite.Sprite):
         # проверка нажатия
         clicked = pg.mouse.get_pressed(3)
         if clicked[0]:
+            self.board.afk_timer = 0
             mouse_pos = pg.mouse.get_pos()
             if self.rect.collidepoint(mouse_pos) and not self.opened and self.board.can_click\
                     and not self.board.on_interface(mouse_pos):
@@ -47,6 +48,7 @@ class Cell(pg.sprite.Sprite):
                     self.board.cell_s.play()
                 self.board.can_click = False
         elif clicked[2]:
+            self.board.afk_timer = 0
             mouse_pos = pg.mouse.get_pos()
             if self.rect.collidepoint(mouse_pos) and not self.opened and self.board.can_click\
                     and not self.board.on_interface(mouse_pos):
@@ -129,6 +131,7 @@ class Board:
         self.timer = 0
         self.op_start = None
         self.theme = theme
+        self.afk_timer = 0
 
         self.group = pg.sprite.Group()
         self.generate_map()
@@ -196,6 +199,9 @@ class Board:
         self.apply_window_ussr = pg.image.load('_internal\диалог_окно_2_ссср.png')
         self.apply_window_japan = pg.image.load('_internal\диалог_окно_2_япония.png')
         self.apply_window = pg.image.load('_internal\диалог_окно_2.png')
+        self.afk_window_ussr = pg.image.load('_internal\сталин.png')
+        self.afk_window_japan = pg.image.load('_internal\хирохито.png')
+        self.afk_window = pg.image.load('_internal\китай_афк.png')
 
     def on_interface(self, m_pos):
         return self.interface_top.collidepoint(m_pos) or self.interface_bot.collidepoint(m_pos)
